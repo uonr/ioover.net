@@ -1,7 +1,7 @@
 {
   description = "Build the blog";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/26.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs =
@@ -25,8 +25,9 @@
       {
         devShells.default = pkgs.mkShell {
           BUNDLE_FORCE_RUBY_PLATFORM = "true";
-          buildInputs = with pkgs; [
-            ruby.devEnv
+          packages = with pkgs; [
+            gems
+            (lib.lowPrio gems.wrappedRuby)
             bundix
             zlib
             libiconv
@@ -42,11 +43,13 @@
           LC_ALL = "en_US.UTF-8";
           LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
 
+          nativeBuildInputs = with pkgs; [
+            gems
+            (lib.lowPrio gems.wrappedRuby)
+          ];
           buildInputs = with pkgs; [
             zlib
             libiconv
-            ruby
-            gems
           ];
           installPhase = ''
             mkdir -p $out

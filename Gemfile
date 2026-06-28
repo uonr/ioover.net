@@ -1,6 +1,9 @@
 source "https://rubygems.org"
 
 gem "jekyll"
+gem "base64"
+gem "csv"
+gem "logger"
 group :jekyll_plugins do
   gem "jekyll-feed"
   gem "jekyll-tidy"
@@ -10,4 +13,3 @@ group :jekyll_plugins do
   gem "jekyll-toc"
   gem 'jekyll-octicons'
 end
-
