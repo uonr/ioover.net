@@ -1,23 +1,24 @@
-@import ./fonts
-@import ./normalize
-@import ./prism
+@use "sass:color"
+@use "./fonts"
+@use "./normalize"
+@use "./prism"
 
 // Variables
 $main-width: 40rem
 $theme-color: #37e53d
 $bg-color: #FFFFFF
 $text-color: #212721
-$gamemaster-color: desaturate(lighten($text-color, 30%), 30%)
-$line-color: lighten($gamemaster-color, 35%)
-$hover-color: lighten($line-color, 15%)
-$hover-line-color: darken($line-color, 10%)
+$gamemaster-color: color.adjust(color.adjust($text-color, $lightness: 30%), $saturation: -30%)
+$line-color: color.adjust($gamemaster-color, $lightness: 35%)
+$hover-color: color.adjust($line-color, $lightness: 15%)
+$hover-line-color: color.adjust($line-color, $lightness: -10%)
 $link-color: #525E95
 $title-color: #000000
 $minor-color: #999999
 $ins-color: #d4fcbc
 $del-color: #fbb
-$mark-color: lighten(yellow, 30%)
-$inline-code-bg-color: lighten(#fdf6e3, 2%)
+$mark-color: color.adjust(yellow, $lightness: 30%)
+$inline-code-bg-color: color.adjust(#fdf6e3, $lightness: 2%)
 $fleuron-size: 1.5rem
 $cursive-font: 'Lora Italic', 'Han Kaiti GB'
 $em-font: 'Lora Italic', "Avenir Next", 'Han Heiti GB'
@@ -79,9 +80,9 @@ a
   text-decoration: none
   transition: 0.3s
   &:active
-    color: lighten($link-color, 30%)
+    color: color.adjust($link-color, $lightness: 30%)
   &:visited
-    color: darken($link-color, 10%)
+    color: color.adjust($link-color, $lightness: -10%)
 
 section
   clear: both
@@ -101,7 +102,7 @@ mark
 
 ins, del
   text-decoration: none
-  border-left: 2px solid lighten($text-color, 25%)
+  border-left: 2px solid color.adjust($text-color, $lightness: 25%)
   margin: 0.1em
 ins
   background-color: $ins-color
@@ -110,27 +111,27 @@ ins
     content: "+"
     margin: 0 0.5em
     font-family: $mono-font
-    color: lighten($text-color, 25%)
+    color: color.adjust($text-color, $lightness: 25%)
 
 s
-  text-decoration-color: transparentize($text-color, 0.5)
+  text-decoration-color: color.adjust($text-color, $alpha: -0.5)
 
 del
   background-color: $del-color
-  color: lighten($del-color, 5%)
+  color: color.adjust($del-color, $lightness: 5%)
   box-shadow: -1px 1px 1px #ef9393
   em
-    color: lighten($del-color, 12%)
+    color: color.adjust($del-color, $lightness: 12%)
   a
     opacity: 0.4
   code
-    background-color: darken($inline-code-bg-color, 50%)
+    background-color: color.adjust($inline-code-bg-color, $lightness: -50%)
   &:before
     content: "-"
     margin: 0 0.5em
     text-decoration: none
     font-family: $mono-font
-    color: lighten($text-color, 25%)
+    color: color.adjust($text-color, $lightness: 25%)
 
 
 
@@ -140,7 +141,7 @@ em
   color: $title-color
   text-decoration: underline
   text-decoration-style: double
-  text-decoration-color: lighten($title-color, 80%)
+  text-decoration-color: color.adjust($title-color, $lightness: 80%)
 
 
 h-hws, h-hws[hidden]
@@ -154,7 +155,7 @@ pre h-hws
 code, pre
   font-family: $mono-font
   background-color: $inline-code-bg-color
-  border-bottom: 0.1em solid darken($inline-code-bg-color, 10%)
+  border-bottom: 0.1em solid color.adjust($inline-code-bg-color, $lightness: -10%)
 
 code
   padding: 0.2em
@@ -173,7 +174,7 @@ blockquote
   position: relative
   left: -1em
   border-left: 0.3em double $line-color
-  color: lighten($text-color, 10%)
+  color: color.adjust($text-color, $lightness: 10%)
 
 hr
   padding: 2rem 0
@@ -187,7 +188,7 @@ hr
     color: $text-color
     width: 10rem
     display: inline-block
-    @include horizon-line(lighten($text-color, 0), 50%, 1px)
+    @include horizon-line($text-color, 50%, 1px)
     text-shadow: 0px 0px 3px $bg-color
     font-size: $fleuron-size
 
@@ -250,9 +251,9 @@ body
 
 // Article
 .page-content a
-  box-shadow: inset 0 -1px lighten($line-color, 15%)
+  box-shadow: inset 0 -1px color.adjust($line-color, $lightness: 15%)
   &:hover, &:focus
-    box-shadow: inset 0 -2px lighten($link-color, 50%)
+    box-shadow: inset 0 -2px color.adjust($link-color, $lightness: 50%)
 
 main
   header
@@ -284,13 +285,13 @@ main
       padding: 0.25em
       line-height: 1.7em
     tr:nth-child(even)
-      background-color: darken($bg-color, 2%)
+      background-color: color.adjust($bg-color, $lightness: -2%)
     tr:hover
-      background-color: darken($bg-color, 5%)
+      background-color: color.adjust($bg-color, $lightness: -5%)
   aside:not(.gamemaster)
     position: relative
     border-top: 0.1em solid $line-color
-    border-bottom: 0.1em solid lighten($line-color, 0%)
+    border-bottom: 0.1em solid $line-color
     font-size: 0.8em
     max-width: 28rem
     margin: 1.5em 0 1.5em auto
@@ -302,14 +303,14 @@ main
       bottom: 0.8em
       right: 0em
       font-family: $mono-font
-      color: lighten($text-color, 50%)
+      color: color.adjust($text-color, $lightness: 50%)
       position: absolute
   h2, h3, h4, h5, h6
     position: relative
   .anchor
-    color: lighten($title-color, 90%)
+    color: color.adjust($title-color, $lightness: 90%)
     &:hover
-      color: lighten($title-color, 50%)
+      color: color.adjust($title-color, $lightness: 50%)
     &:after
       content: "§"
       font-family: $serif-font
@@ -384,9 +385,9 @@ main
   p
     font-size: 0.9rem !important
   &::selection
-    background-color: invert($gamemaster-color)
+    background-color: color.invert($gamemaster-color)
   &::-moz-selection
-    background-color: invert($gamemaster-color)
+    background-color: color.invert($gamemaster-color)
 
   +media-query($on-palm)
     width: 100%
@@ -413,7 +414,7 @@ main
 .pagination
   margin: 2rem 0
   a
-    background: none lighten($text-color, 85%)
+    background: none color.adjust($text-color, $lightness: 85%)
     display: block
     text-decoration: none
     box-shadow: none
@@ -461,7 +462,7 @@ main
     list-style-type: lower-roman
     time
       font-family: $mono-font
-      color: lighten($text-color, 50%)
+      color: color.adjust($text-color, $lightness: 50%)
       font-size: 0.9em
 
 
@@ -482,6 +483,5 @@ main
     // .summary
     .post-meta
       font-family: $mono-font
-      color: lighten($text-color, 50%)
-
+      color: color.adjust($text-color, $lightness: 50%)
 
